@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PinkShop Online</title>
+  <style>
+    /* ===== CSS ===== */
+    :root {
+      --pink: #ff66b2;
+      --pink-light: #ffe6f2;
+      --text-dark: #333;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background-color: var(--pink-light);
+      color: var(--text-dark);
+    }
+
+    .header {
+      background-color: var(--pink);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .header input {
+      width: 90%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 20px;
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      padding: 15px;
+      margin-bottom: 70px; /* supaya tidak tertutup footer */
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    .product-card p {
+      color: var(--pink);
+      font-weight: bold;
+    }
+
+    button {
+      background-color: var(--pink);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 15px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff3385;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: var(--pink);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <h1>🩷 PinkShop</h1>
+    <input type="text" id="search" placeholder="Cari produk..." />
+  </header>
+
+  <!-- ===== PRODUK ===== -->
+  <main class="product-container" id="productList">
+    <!-- Produk akan muncul dari JavaScript -->
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <nav>
+      <a href="#">🏠 Beranda</a>
+      <a href="#">🛒 Keranjang</a>
+      <a href="#">👤 Akun</a>
+    </nav>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    const products = [
+      { name: "Tas Wanita Elegan", price: 120000, img: "https://i.imgur.com/xH5QK3R.jpg" },
+      { name: "Sepatu Sneakers Pink", price: 175000, img: "https://i.imgur.com/jv6FQb3.jpg" },
+      { name: "Lip Tint Cantik", price: 35000, img: "https://i.imgur.com/F8t0EwO.jpg" },
+      { name: "Kaos Oversize", price: 90000, img: "https://i.imgur.com/Mg3A1po.jpg" },
+      { name: "Jam Tangan Wanita", price: 150000, img: "https://i.imgur.com/yN8TfYA.jpg" },
+    ];
+
+    const productList = document.getElementById("productList");
+
+    function showProducts(list) {
+      productList.innerHTML = "";
+      list.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.name}" />
+          <h3>${p.name}</h3>
+          <p>Rp ${p.price.toLocaleString()}</p>
+          <button>Tambah ke Keranjang</button>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    showProducts(products);
+
+    // Fitur pencarian produk
+    document.getElementById("search").addEventListener("keyup", e => {
+      const keyword = e.target.value.toLowerCase();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(keyword));
+      showProducts(filtered);
+    });
+  </script>
+</body>
+</html>
